@@ -230,11 +230,12 @@ export default function App() {
                 onChange={(e) => setSymbol(e.target.value)}
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500"
               >
-                <option value="R_100">Volatility 100 Index</option>
-                <option value="R_75">Volatility 75 Index</option>
-                <option value="R_50">Volatility 50 Index</option>
-                <option value="R_25">Volatility 25 Index</option>
-                <option value="R_10">Volatility 10 Index</option>
+ {SYMBOLS.map((s) => (
+  <option key={s.symbol} value={s.symbol}>
+    {s.name}
+  </option>
+)}
+                
               </select>
             </div>
 
