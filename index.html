@@ -1,14 +1,192 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KRISHWAVE</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KRISHWAVE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+
+  <!-- App Wrapper Container -->
+  <div class="app-container">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-nav">
+      <div class="logo">KRISHWAVE</div>
+      
+      <div class="header-actions">
+        <!-- Dark/Light Mode Toggle Switch -->
+        <label class="theme-switch">
+          <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
+          <span class="slider round"></span>
+        </label>
+
+        <!-- Refresh Button -->
+        <button class="icon-btn refresh-btn" onclick="location.reload()">&#8635;</button>
+
+        <!-- Account Type Dropdown -->
+        <div class="account-dropdown-wrapper">
+          <button class="account-btn" onclick="toggleAccountModal()">
+            <span id="selectedAccountLabel">Demo Account</span> &#9662;
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ACCOUNT SELECTION MODAL -->
+    <div id="accountModal" class="modal hidden">
+      <div class="modal-overlay" onclick="toggleAccountModal()"></div>
+      <div class="modal-content">
+        <label class="modal-option">
+          <span>Real Account</span>
+          <input type="radio" name="accountType" value="Real Account" onchange="selectAccount('Real Account')">
+        </label>
+
+        <label class="modal-option">
+          <span>Demo Account</span>
+          <input type="radio" name="accountType" value="Demo Account" checked onchange="selectAccount('Demo Account')">
+        </label>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT VIEWS -->
+    <main class="content-body">
+
+      <!-- 1. TRADE TAB VIEW -->
+      <section id="tradeTab" class="tab-view active">
+        <div class="card-box">
+          <div class="balance-header">
+            <span class="label">ACCOUNT BALANCE</span>
+            <h2 id="balanceDisplay">$0.00</h2>
+            <button class="deposit-btn">Deposit</button>
+          </div>
+
+          <!-- Market Dropdown -->
+          <div class="market-select-wrapper">
+            <label for="volatilitySelect">Select Market:</label>
+            <select id="volatilitySelect" class="styled-select">
+              <optgroup label="Standard Volatility (2s Ticks)">
+                <option value="v10">Volatility 10 Index</option>
+                <option value="v25">Volatility 25 Index</option>
+                <option value="v50">Volatility 50 Index</option>
+                <option value="v75">Volatility 75 Index</option>
+                <option value="v100">Volatility 100 Index</option>
+              </optgroup>
+              <optgroup label="Fast Volatility (1s Ticks)">
+                <option value="v10_1s">Volatility 10 (1s) Index</option>
+                <option value="v25_1s">Volatility 25 (1s) Index</option>
+                <option value="v50_1s">Volatility 50 (1s) Index</option>
+                <option value="v75_1s">Volatility 75 (1s) Index</option>
+                <option value="v100_1s">Volatility 100 (1s) Index</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Chart Container -->
+          <div class="chart-area">
+            <div class="chart-header">
+              <span id="chartMarketName">Volatility 10 Index</span>
+              <span class="chart-price" id="livePrice">8741.84</span>
+            </div>
+            <div class="placeholder-chart">
+              <!-- Live Chart Canvas / SVG will render here -->
+              <div class="wave-line"></div>
+            </div>
+          </div>
+
+          <!-- Trading Controls -->
+          <button id="mainTradingBtn" class="primary-btn start-btn">Start Trading Bot</button>
+        </div>
+      </section>
+
+      <!-- 2. HISTORY TAB VIEW -->
+      <section id="historyTab" class="tab-view hidden">
+        <div class="card-box">
+          <div class="history-header">
+            <h3>Trading History</h3>
+            <button class="clear-logs-btn">Clear Logs</button>
+          </div>
+          <div class="profit-summary">
+            Total Profit: <span class="green-text">$326.00</span>
+          </div>
+
+          <!-- Log Item Example -->
+          <div class="history-list">
+            <div class="history-card">
+              <div class="history-details">
+                <strong>Volatility 10 Index</strong>
+                <p>Matches | MATCH 4 | Stake: $10.00</p>
+              </div>
+              <div class="history-payout">+$81.50</div>
+            </div>
+            <div class="history-card">
+              <div class="history-details">
+                <strong>Volatility 10 Index</strong>
+                <p>Matches | MATCH 4 | Stake: $10.00</p>
+              </div>
+              <div class="history-payout">+$81.50</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. PROFILE TAB VIEW -->
+      <section id="profileTab" class="tab-view hidden">
+        <div class="card-box text-center">
+          <div class="avatar-circle">A</div>
+          <h3 class="user-name">Anne wambulwa</h3>
+          <p class="user-email">chrispusatale99@gmail.com</p>
+
+          <div class="profile-info-list">
+            <div class="info-row">
+              <span>Security</span>
+              <span class="purple-text">Secure SSL</span>
+            </div>
+            <div class="info-row">
+              <span>Account ID</span>
+              <strong id="accountID">KRISHWAVE-9384</strong>
+            </div>
+            <div class="info-row">
+              <span>Account Status</span>
+              <span class="green-text">Active</span>
+            </div>
+            <div class="info-row">
+              <span>Help & Support</span>
+              <a href="#" class="link-text">Contact Us</a>
+            </div>
+            <div class="info-row">
+              <span>Community Channel</span>
+              <a href="#" class="link-text">Join Krishwave</a>
+            </div>
+          </div>
+
+          <button class="logout-btn">Log Out</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav">
+      <button class="nav-tab active" onclick="switchTab('tradeTab', this)">
+        <span class="icon">&#9881;</span>
+        <span>Trade</span>
+      </button>
+      <button class="nav-tab" onclick="switchTab('historyTab', this)">
+        <span class="icon">&#128202;</span>
+        <span>History</span>
+      </button>
+      <button class="nav-tab" onclick="switchTab('profileTab', this)">
+        <span class="icon">&#128100;</span>
+        <span>Profile</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+              </html>
+                                                      
   
